@@ -13,7 +13,7 @@ with open(filename) as f:
 data_int = []
 
 for item in data_str:
-    data_int.append(int(item))
+    data_int.append(float(item))
 
 dataset = Dataset(data_int)
 print(f"Dataset details: {dataset}")

@@ -26,7 +26,7 @@ with open(probable_filename) as f:
 with open(practiceQuiz_filename) as f:
     
     for line in f:
-        practiceQuiz_data.append(int(line.strip()))
+        practiceQuiz_data.append(float(line.strip()))
     f.close()
 
 """
