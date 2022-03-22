@@ -16,5 +16,5 @@ for item in data_str:
     data_int.append(float(item))
 
 dataset = Dataset(data_int)
-print(f"Dataset details: {dataset}")
+print(f"Dataset details:\n{dataset}")
 

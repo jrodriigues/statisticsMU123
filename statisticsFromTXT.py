@@ -32,9 +32,10 @@ with open(practiceQuiz_filename) as f:
 """
 possible = Dataset(possible_data)
 probable = Dataset(probable_data)
-practiceQuiz = Dataset(practiceQuiz_data)
-print(f"Possible dataset:\n{possible}")
-print(f"\nProbable dataset:\n{probable}")
-print(f"\nPractice quiz dataset:\n{practiceQuiz}")
 """
+practiceQuiz = Dataset(practiceQuiz_data)
+"""print(f"Possible dataset:\n{possible}")
+print(f"\nProbable dataset:\n{probable}")
+"""
+print(f"\nPractice quiz dataset:\n{practiceQuiz}")
 

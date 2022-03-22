@@ -10,11 +10,15 @@ class Dataset:
         self.iqr = self.get_iqr()
         self.Q1 = self.get_Q1()
         self.Q3 = self.get_Q3()
+        self.max = self.get_max()
+        self.min = self.get_min()
+        self.size = self.get_size()
 
     def __str__(self):
         """Returns a formatted string of the object's attributes."""
 
-        return f"Mean - {self.mean}\nMedian - {self.median}\nRange - {self.range}\nQ1 - {self.Q1}\nQ3 - {self.Q3}\nIQR - {self.iqr}"
+        return f"Mean - {self.mean}\nMedian - {self.median}\nRange - {self.range}\nMin - {self.min}\nMax - {self.max}\nQ1 - {self.Q1}\nQ3 - {self.Q3}\nIQR - {self.iqr}\nSize - {self.size}"
+        
  
     def _check_if_even(self, *arg):
         """Checks if a list has got even or odd total numbers. Returns True if EVEN"""
@@ -23,6 +27,21 @@ class Dataset:
             return True
         elif len(arg) % 2 == 1:
             return False
+
+    def get_min(self):
+        """Return the minimun value of the dataset"""
+        
+        return self.data_sorted[0]
+
+    def get_max(self):
+        """Returns the maximum value of the dataset""" 
+
+        return self.data_sorted[-1]
+
+    def get_size(self):
+        """Returns the size of the dataset"""
+
+        return len(self.data)
 
     def get_mean(self):
         """Returns the mean of the dataset"""
