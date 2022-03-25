@@ -109,29 +109,35 @@ class Dataset:
         iqr = self.get_Q3() - self.get_Q1()
         return iqr
 
-def rounding(number, dp=2):
-    """Returns the rounded number from input with choice of decimal places"""
+def rounding(number, dp=1):
+    """Function that will round the inout number to inut decimal places"""
 
     number_list = list(number)
     number_list_int = []
-    dp_index = number_list.index('.')
     rnded_number = ""
 
-    for value in number_list:
-        if value != '.':
-            number_list_int.append(int(value))
-            
-        else:
-            number_list_int.append(value)
+    # means it's a whole number
+    if '.' not in number_list:
+        return number
         
-    if number_list_int[dp_index + dp + 1] >= 5:
-        number_list_int[dp_index + dp] += 1
+    else:
+        dp_index = number_list.index('.')    
 
-    del number_list_int[dp_index + dp + 1:]
+        for value in number_list:
+            if value != '.':
+                number_list_int.append(int(value))
+                
+            else:
+                number_list_int.append(value)
+            
+        if number_list_int[dp_index + dp + 1] >= 5:
+            number_list_int[dp_index + dp] += 1
 
-    for value in number_list_int:
-        rnded_number += str(value)
+        del number_list_int[dp_index + dp + 1:]
 
-    rnded_number = float(rnded_number)
+        for value in number_list_int:
+            rnded_number += str(value)
+
+        rnded_number = float(rnded_number)
     
     return rnded_number
