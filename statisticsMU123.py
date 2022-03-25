@@ -1,6 +1,4 @@
-from statistics import variance
 from math import sqrt
-
 
 def rounding(number, dp=2):
         """Returns the input chosen decimal places. Default = 2"""
@@ -222,9 +220,9 @@ class Dataset:
         [squared_deviations.append(value ** 2) for value in deviations]
 
         # Get the mean of the squared deviations to find the variance
-        variance = self.get_mean(*squared_deviations)
+        varianc = self.get_mean(*squared_deviations)
 
         # The SD will be the square root of the variance
-        sd = sqrt(variance)
+        sd = sqrt(varianc)
 
         return sd
