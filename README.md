@@ -4,6 +4,6 @@ The objects will be initialized with the attributes of mean, median, range, Q1, 
 
 "statisticsFromTXT.py" is a simple program designed to test the above program by using data from .txt files.
 
-I had this idea from using Dotplotter, I found interesting the idea of creating a program that would give me the exact same information.
+I had this idea from using Dataplotter, I found interesting the idea of creating a program that would give me the exact same information.
 
 The next updates will add the Standard Deviation and also rounding to 2 d.p.
