@@ -79,18 +79,18 @@ def rounding(number, dp=2):
 class Dataset:
     """Class that will provide methods to calculate the location and spread of datasets"""
 
-    def __init__(self, data, dp=2):
+    def __init__(self, data, dp=3):
         self.data = data
         self.data_sorted = sorted(data)
         self.mean = rounding(self.get_mean(), dp)
-        self.median = self.get_median()
-        self.range = self.get_range()
+        self.median = rounding(self.get_median(), dp)
+        self.range = rounding(self.get_range(), dp)
         self.iqr = rounding(self.get_iqr(), dp)
         self.Q1 = rounding(self.get_Q1(), dp)
         self.Q3 = rounding(self.get_Q3(), dp)
-        self.max = self.get_max()
-        self.min = self.get_min()
-        self.size = self.get_size()
+        self.max = rounding(self.get_max(), dp)
+        self.min = rounding(self.get_min(), dp)
+        self.size = rounding(self.get_size(), dp)
         self.sd = rounding(self.get_sd(), dp)
 
     def __str__(self):
