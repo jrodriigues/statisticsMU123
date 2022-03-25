@@ -1,6 +1,10 @@
+from statistics import variance
+from math import sqrt
+
+
 def rounding(number, dp=2):
         """Returns the input chosen decimal places. Default = 2"""
-        
+
         number_str = str(number)
         number_list = []
         rnded_number = ""
@@ -23,11 +27,47 @@ def rounding(number, dp=2):
             # If < required dp, returns the original number.    
             decimal_places = len(number_list) - (dp_index + 1)
 
-            if decimal_places > dp:
+            # General condition when rounding does not involve changing the left integer of the .
+            if decimal_places > dp and dp >= 2:
                 if number_list[dp_index + dp + 1] >= 5:
-                    number_list[dp_index + dp] += 1
+
+                    # Rounding from 09 to 10
+                    if number_list[dp_index + dp] == 9:
+                        number_list[dp_index + dp] = 0
+                        number_list[dp_index + dp - 1] += 1
+
+                    else:
+                        number_list[dp_index + dp] += 1
 
                 del number_list[dp_index + dp + 1:]
+
+                for value in number_list:
+                    rnded_number += str(value)
+
+                rnded_number = float(rnded_number)
+                return rnded_number
+
+            # Next two elif conditions are specially for when rounding invloves changing the left integer of the . 
+
+            elif decimal_places > dp and dp == 0:
+                if number_list[dp_index + 1] >= 5:
+                    number_list[dp_index + 1] = 0
+                    number_list[dp_index - 1] += 1
+                
+                del number_list[dp_index:]
+
+                for value in number_list:
+                    rnded_number += str(value)
+
+                rnded_number = int(rnded_number)
+                return rnded_number
+            
+            elif decimal_places > dp and dp == 1:
+                if number_list[dp_index + dp] >= 5:
+                    number_list[dp_index + 1] = 0
+                    number_list[dp_index - 1] += 1
+                
+                del number_list[dp_index + dp:]
 
                 for value in number_list:
                     rnded_number += str(value)
@@ -53,11 +93,21 @@ class Dataset:
         self.max = self.get_max()
         self.min = self.get_min()
         self.size = self.get_size()
+        self.sd = rounding(self.get_sd(), dp)
 
     def __str__(self):
         """Returns a formatted string of the object's attributes."""
 
-        return f"Mean - {self.mean}\nMedian - {self.median}\nRange - {self.range}\nMin - {self.min}\nMax - {self.max}\nQ1 - {self.Q1}\nQ3 - {self.Q3}\nIQR - {self.iqr}\nSize - {self.size}"
+        return (f"Mean - {self.mean}\n"
+                f"Median - {self.median}\n"
+                f"Range - {self.range}\n"
+                f"Min - {self.min}\n"
+                f"Max - {self.max}\n"
+                f"Q1 - {self.Q1}\n"
+                f"Q3 - {self.Q3}\n"
+                f"IQR - {self.iqr}\n"
+                f"SD - {self.sd}\n"
+                f"Size - {self.size}")
    
     def _check_if_even(self, *arg):
         """Checks if a list has got even or odd total numbers. Returns True if EVEN"""
@@ -82,12 +132,22 @@ class Dataset:
 
         return len(self.data)
 
-    def get_mean(self):
+    def get_mean(self, *arg):
         """Returns the mean of the dataset"""
-  
-        total_sum = sum(self.data)
-        mean = total_sum / len(self.data)
-        return mean
+
+        if arg:
+            total_sum = 0
+
+            for value in arg:
+                total_sum += value 
+
+            mean = total_sum / len(arg)
+            return mean
+        
+        else:
+            total_sum = sum(self.data)
+            mean = total_sum / len(self.data)
+            return mean
 
     def get_median(self, *data):
         """Returns the mean of the dataset"""
@@ -147,3 +207,24 @@ class Dataset:
 
         iqr = self.get_Q3() - self.get_Q1()
         return iqr
+
+    def get_sd(self):
+        """Returns the Standard Deviation (SD) of the dataset"""
+
+        deviations = []
+        squared_deviations = []
+
+        # Subtract the mean to each value of the dataset
+        for value in self.data_sorted:
+            deviations.append(value - self.mean)
+        
+        # Square the deviations
+        [squared_deviations.append(value ** 2) for value in deviations]
+
+        # Get the mean of the squared deviations to find the variance
+        variance = self.get_mean(*squared_deviations)
+
+        # The SD will be the square root of the variance
+        sd = sqrt(variance)
+
+        return sd
