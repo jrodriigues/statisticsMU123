@@ -1,15 +1,55 @@
+def rounding(number, dp=2):
+        """Returns the input chosen decimal places. Default = 2"""
+        
+        number_str = str(number)
+        number_list = []
+        rnded_number = ""
+        
+        # creates a list where all the values are the input number as integers, for easy maneuverability.
+        for value in number_str:
+            if value != '.':
+                number_list.append(int(value))
+            else:
+                number_list.append(value)
+
+        # means it's a whole number
+        if '.' not in number_list:
+            return number
+            
+        else:
+            dp_index = number_list.index('.')
+
+            # gives the number of decimal places of the original number. 
+            # If < required dp, returns the original number.    
+            decimal_places = len(number_list) - (dp_index + 1)
+
+            if decimal_places > dp:
+                if number_list[dp_index + dp + 1] >= 5:
+                    number_list[dp_index + dp] += 1
+
+                del number_list[dp_index + dp + 1:]
+
+                for value in number_list:
+                    rnded_number += str(value)
+
+                rnded_number = float(rnded_number)
+                return rnded_number
+
+            else:
+                return number
+
 class Dataset:
     """Class that will provide methods to calculate the location and spread of datasets"""
 
-    def __init__(self, data):
+    def __init__(self, data, dp=2):
         self.data = data
         self.data_sorted = sorted(data)
-        self.mean = self.get_mean()
+        self.mean = rounding(self.get_mean(), dp)
         self.median = self.get_median()
         self.range = self.get_range()
-        self.iqr = self.get_iqr()
-        self.Q1 = self.get_Q1()
-        self.Q3 = self.get_Q3()
+        self.iqr = rounding(self.get_iqr(), dp)
+        self.Q1 = rounding(self.get_Q1(), dp)
+        self.Q3 = rounding(self.get_Q3(), dp)
         self.max = self.get_max()
         self.min = self.get_min()
         self.size = self.get_size()
@@ -18,8 +58,7 @@ class Dataset:
         """Returns a formatted string of the object's attributes."""
 
         return f"Mean - {self.mean}\nMedian - {self.median}\nRange - {self.range}\nMin - {self.min}\nMax - {self.max}\nQ1 - {self.Q1}\nQ3 - {self.Q3}\nIQR - {self.iqr}\nSize - {self.size}"
-        
- 
+   
     def _check_if_even(self, *arg):
         """Checks if a list has got even or odd total numbers. Returns True if EVEN"""
 
@@ -108,36 +147,3 @@ class Dataset:
 
         iqr = self.get_Q3() - self.get_Q1()
         return iqr
-
-def rounding(number, dp=1):
-    """Function that will round the inout number to inut decimal places"""
-
-    number_list = list(number)
-    number_list_int = []
-    rnded_number = ""
-
-    # means it's a whole number
-    if '.' not in number_list:
-        return number
-        
-    else:
-        dp_index = number_list.index('.')    
-
-        for value in number_list:
-            if value != '.':
-                number_list_int.append(int(value))
-                
-            else:
-                number_list_int.append(value)
-            
-        if number_list_int[dp_index + dp + 1] >= 5:
-            number_list_int[dp_index + dp] += 1
-
-        del number_list_int[dp_index + dp + 1:]
-
-        for value in number_list_int:
-            rnded_number += str(value)
-
-        rnded_number = float(rnded_number)
-    
-    return rnded_number
