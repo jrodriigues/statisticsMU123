@@ -210,17 +210,16 @@ class Dataset:
         """Returns the Standard Deviation (SD) of the dataset"""
 
         deviations = []
-        squared_deviations = []
 
         # Subtract the mean to each value of the dataset
         for value in self.data_sorted:
             deviations.append(value - self.mean)
         
         # Square the deviations
-        [squared_deviations.append(value ** 2) for value in deviations]
+        squared_deviations = [(value ** 2) for value in deviations]
 
-        # Get the mean of the squared deviations to find the variance
-        varianc = self.get_mean(*squared_deviations)
+        # Get the mean of the squared deviations to find the variance and subtract 1 (Bessel's correction for bias)
+        varianc = sum(squared_deviations) / (self.size - 1)
 
         # The SD will be the square root of the variance
         sd = sqrt(varianc)
